@@ -1,7 +1,7 @@
 // Marc Stocker
 // Kevin Okele
 //=================================================
-// This is the Master Branch
+// This is the Marc Branch
 //=================================================
 
 #include <stdio.h>
@@ -22,8 +22,10 @@ int main(int argc, char *argv[])
 	char *host;
 	char *host_port;
 	char *filename;
-	int s;
+	char buf[MAX_LINE];
+	int s, n;
 	int len;
+	FILE *of;
 
 	if (argc==4)
 	{
@@ -75,9 +77,31 @@ int main(int argc, char *argv[])
 	}
 	freeaddrinfo(result);
 
-	// Send Filename to Server
 	printf("Filename to be sent: %s\nLen of file: %i\n", filename, len);
-	send(s, filename, len, 0);
+	// Send Filename to Server
+	n = send(s, filename, len, 0);
+	if(n < 0)
+		perror("ERROR writing to socket");
+
+
+	// Receive the file
+	//-------------------------------------------------------------
+
+	// Open file for writing
+	of = fopen(filename, "w");
+	if (of == NULL){
+		fprintf(stderr, "Can't open file for writing\n");
+		close(s);
+		exit(1)
+	}
+	// Continue reading file while more information exists
+	while( recv(s, buf, sizeof(buf), 0) > 0)
+	{
+
+	}
+
+
+
 
 	// Close the send socket
 	close(s);

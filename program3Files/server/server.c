@@ -1,7 +1,7 @@
 // Marc Stocker
 // Kevin Okele
 //=================================================
-// This is the Master Branch
+// This is the Marc Branch
 //=================================================
 
 #include <sys/types.h>
@@ -25,6 +25,7 @@ main(int argc, char *argv[])
 	int s, new_s;
 	int len;
 	char *filename;
+	FILE *fp;
 
 	/* Build address data structure */
 	memset(&hints, 0, sizeof(struct addrinfo));
@@ -71,7 +72,8 @@ main(int argc, char *argv[])
 	}
 
 	/* Wait for connection, then receive and print text */
-	while(1)
+	int repeat = 1;
+	while(repeat == 1)
 	{
 		if ((new_s = accept(s, rp->ai_addr, &(rp->ai_addrlen))) < 0)
 		{
@@ -79,13 +81,30 @@ main(int argc, char *argv[])
 			close(s);
 			exit(1);
 		}
-		while ((len = recv(new_s, buf, sizeof(buf), 0)))
+		len = recv(new_s, buf, sizeof(buf), 0);
+		if(len > 0)
 		{
 			// Save filename from client
 			filename = buf;
 			printf("The file to be transfered: %s\n", filename);
+			// Open the file
+			fp = fopen("testfile.txt", "r");
+			if (fp == NULL)
+			{
+				fprintf(stderr, "Can't open input file '%s'!\n", filename);
+				close(new_s);
+				freeaddrinfo(result);
+				close(s);
+				exit(1);
+			}
+
+
+
+			repeat = 0;
 		}
 
+
+		// close connection with client
 		close(new_s);
 	}
 

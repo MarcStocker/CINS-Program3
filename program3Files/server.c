@@ -1,6 +1,6 @@
 // Marc Stocker
 // Kevin Okele
-// This is the master Branch
+// This is the Kevin Branch
 
 /* This code is an updated version of the sample code from "Computer Networks: A Systems
  * Approach," 5th Edition by Larry L. Peterson and Bruce S. Davis. Some code comes from

@@ -25,6 +25,7 @@ main(int argc, char *argv[])
 	char buf[MAX_LINE];
 	int s, new_s;
 	int len;
+	char *filename;
 
 	/* Build address data structure */
 	memset(&hints, 0, sizeof(struct addrinfo));
@@ -81,7 +82,9 @@ main(int argc, char *argv[])
 		}
 		while ((len = recv(new_s, buf, sizeof(buf), 0)))
 		{
-			fputs(buf, stdout);
+			// Save filename from client
+			filename = buf;
+			fputs(filename, stdout);
 		}
 
 		close(new_s);

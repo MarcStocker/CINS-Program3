@@ -13,8 +13,7 @@
 #define MAX_LINE 256
 #define MAX_PENDING 5
 
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	struct addrinfo hints;
 	struct addrinfo *rp, *result;

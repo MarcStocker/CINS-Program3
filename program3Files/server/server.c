@@ -86,26 +86,43 @@ main(int argc, char *argv[])
 		{
 			// Save filename from client
 			filename = buf;
-			printf("The file to be transfered: %s\n", filename);
+			printf("The file to be transfered: %s\n\n", filename);
 			// Open the file
-			fp = fopen("testfile.txt", "r");
+			fp = fopen(filename, "r");
+			// ERROR opening file
 			if (fp == NULL)
 			{
 				fprintf(stderr, "Can't open input file '%s'!\n", filename);
+				//send error to client - tell them we cannot open/find file
+				 char *errorr;
+				 errorr = "SERVER ERROR";
+				send(new_s, errorr, strlen(errorr)+1, 0);
+
+				//Close connections and exit program
 				close(new_s);
 				freeaddrinfo(result);
 				close(s);
 				exit(1);
 			}
 
+			printf("========= Printing/Sending file contents =========\n\n");
+			// Opened file successfully, send contents of file
+			int x;
+			while((x = fgetc(fp)) != EOF)
+			{
+				// printf("%c", x);
+				send(new_s, &x, 1, 0);
+			}
 
-
+			printf("\n\n\n--------- Finished Sending --------------\n\n");
 			repeat = 0;
 		}
 
 
 		// close connection with client
 		close(new_s);
+		// close file for reading
+		fclose(fp);
 	}
 
 	freeaddrinfo(result);

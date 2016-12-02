@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
 		host = argv[1];
 		host_port= argv[2];
 		filename = argv[3];
-		len = strlen(filename);
+		len = strlen(filename)+1;
 	}
 	else
 	{
@@ -87,17 +87,26 @@ int main(int argc, char *argv[])
 	// Receive the file
 	//-------------------------------------------------------------
 
+	printf("\n\n\n========= RECEIVING FILE FROM SERVER =============\n\n");
 	// Open file for writing
 	of = fopen(filename, "w");
 	if (of == NULL){
 		fprintf(stderr, "Can't open file for writing\n");
 		close(s);
-		exit(1)
+		exit(1);
 	}
 	// Continue reading file while more information exists
-	while( recv(s, buf, sizeof(buf), 0) > 0)
+	// n = recv(s, buf, len, 0);
+	// if (n < 0){
+	// 	perror("ERROR reading from server");
+	// 	printf("SERVER ERROR reading from server\n");
+	// }
+	// printf("printing buf: %s\n", buf);
+	int x;
+	while( recv(s, &x, 1, 0) > 0)
 	{
-
+		// printf("printing buf: %s.", buf);
+		fprintf(of, "%c", x);
 	}
 
 
@@ -105,6 +114,8 @@ int main(int argc, char *argv[])
 
 	// Close the send socket
 	close(s);
+	// Close the file for writing
+	fclose(of);
 
 	return 0;
 }

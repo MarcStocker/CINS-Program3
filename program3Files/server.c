@@ -1,5 +1,6 @@
 // Marc Stocker
 // Kevin Okele
+// This is the Marc Branch
 
 /* This code is an updated version of the sample code from "Computer Networks: A Systems
  * Approach," 5th Edition by Larry L. Peterson and Bruce S. Davis. Some code comes from
@@ -12,7 +13,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define SERVER_PORT "5433"
+#define SERVER_PORT "5432"
 #define MAX_LINE 256
 #define MAX_PENDING 5
 
@@ -82,6 +83,7 @@ main(int argc, char *argv[])
 		{
 			fputs(buf, stdout);
 		}
+
 		close(new_s);
 	}
 

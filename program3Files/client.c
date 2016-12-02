@@ -16,25 +16,30 @@
 #define SERVER_PORT "5432"
 #define MAX_LINE 256
 
-int
-main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	struct addrinfo hints;
 	struct addrinfo *rp, *result;
 	char *host;
+	char *host_port;
+	char *filename;
 	char buf[MAX_LINE];
 	int s;
 	int len;
 
-	if (argc==2)
+	if (argc==4)
 	{
 		host = argv[1];
+		host_port= argv[2];
+		filename = argv[3];
 	}
 	else
 	{
 		fprintf(stderr, "usage: %s host\n", argv[0]);
 		exit(1);
 	}
+
+	printf("\nConnecting to server with following information...\nHost: %s\nHost Port: %s\nFilename: %s\n\n\n", host, host_port, filename);
 
 	/* Translate host name into peer's IP address */
 	memset(&hints, 0, sizeof(hints));
@@ -78,7 +83,7 @@ main(int argc, char *argv[])
 		len = strlen(buf) + 1;
 		send(s, buf, len, 0);
 	}
-
+	// Close the send socket
 	close(s);
 
 	return 0;

@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 	struct addrinfo *rp, *result;
 	char *host;
 	char *host_port;
-	char *filename;
+	char *thenameofafile;
 	char buf[MAX_LINE];
 	int s;
 	int len;
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	{
 		host = argv[1];
 		host_port= argv[2];
-		filename = argv[3];
+		thenameofafile = argv[3];
 	}
 	else
 	{

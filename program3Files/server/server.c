@@ -83,7 +83,7 @@ main(int argc, char *argv[])
 		{
 			// Save filename from client
 			filename = buf;
-			fputs(filename, stdout);
+			printf("The file to be transfered: %s\n", filename);
 		}
 
 		close(new_s);

@@ -30,7 +30,6 @@ int main(int argc, char *argv[])
 		host = argv[1];
 		host_port= argv[2];
 		filename = argv[3];
-		filename[strlen(filename)]='\n';
 		len = strlen(filename);
 	}
 	else

@@ -117,6 +117,7 @@ ssize_t readchunck( int sockfd, char *buf, size_t len, char *keyword )
 		//bufnum++;
 
 		pch = strstr(buf, keyword);
+		buf >> file.txt
 		while (pch != NULL)
 		{
 			count ++;

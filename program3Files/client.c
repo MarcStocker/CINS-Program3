@@ -76,14 +76,16 @@ int main(int argc, char *argv[])
 	}
 	freeaddrinfo(result);
 
-	/* Main loop: get and send lines of text */
+	//send(s, buf
+
+	/* Main loop: get and send lines of text 
 	while (fgets(buf, sizeof(buf), stdin))
 	{
 		buf[MAX_LINE-1] = '\0';
 		len = strlen(buf) + 1;
 		send(s, buf, len, 0);
 	}
-	// Close the send socket
+	// Close the send socket */
 	close(s);
 
 	return 0;

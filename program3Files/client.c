@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 	struct addrinfo *rp, *result;
 	char *host;
 	char *host_port;
-	char *thenameofafile;
+	char *var_file;
 	char buf[MAX_LINE];
 	int s;
 	int len;
@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 	{
 		host = argv[1];
 		host_port= argv[2];
-		thenameofafile = argv[3];
+		var_file = argv[3];
 	}
 	else
 	{
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 
-	printf("\nConnecting to server with following information...\nHost: %s\nHost Port: %s\nFilename: %s\n\n\n", host, host_port, filename);
+	printf("\nConnecting to server with following information...\nHost: %s\nHost Port: %s\nFilename: %s\n\n\n", host, host_port, var_file);
 
 	/* Translate host name into peer's IP address */
 	memset(&hints, 0, sizeof(hints));

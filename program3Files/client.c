@@ -1,7 +1,7 @@
 // Marc Stocker
 // Kevin Okele
 //=================================================
-// This is the Marc Branch
+// This is the Master Branch
 //=================================================
 
 #include <stdio.h>

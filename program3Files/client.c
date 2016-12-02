@@ -1,10 +1,9 @@
 // Marc Stocker
 // Kevin Okele
-// This is the Marc Branch
+//=================================================
+// This is the Master Branch
+//=================================================
 
-/* This code is an updated version of the sample code from "Computer Networks: A Systems
- * Approach," 5th Edition by Larry L. Peterson and Bruce S. Davis. Some code comes from
- * man pages, mostly getaddrinfo(3). */
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/types.h>

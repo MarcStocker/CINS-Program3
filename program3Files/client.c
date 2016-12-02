@@ -23,6 +23,7 @@ int main(int argc, char *argv[])
 	char *host;
 	char *host_port;
 	char *filename;
+	char buf[MAX_LINE];
 	int s;
 	int len;
 
@@ -31,8 +32,9 @@ int main(int argc, char *argv[])
 		host = argv[1];
 		host_port= argv[2];
 		filename = argv[3];
-
-		len = strlen(filename) + 1;
+		filename[strlen(filename)] = '\0';
+		filename[strlen(filename)-1] = '\0';
+		len = strlen(filename)+1;
 	}
 	else
 	{
@@ -80,7 +82,11 @@ int main(int argc, char *argv[])
 	// Send Filename to Server
 	printf("Filename to be sent: %s\nLen of file: %i\n", filename, len);
 	send(s, filename, len, 0);
-	send(s, '\0', 1, 0);
+
+	fgets(buf, sizeof(buf), stdin);
+	len = strlen(buf) + 1;
+	send(s, buf, len, 0);
+
 	// Close the send socket
 	close(s);
 

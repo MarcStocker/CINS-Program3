@@ -23,7 +23,6 @@ int main(int argc, char *argv[])
 	char *host;
 	char *host_port;
 	char *filename;
-	char buf[MAX_LINE-1];
 	int s;
 	int len;
 
@@ -34,13 +33,6 @@ int main(int argc, char *argv[])
 		filename = argv[3];
 
 		len = strlen(filename) + 1;
-	}
-	/* Main loop: get and send lines of text */
-	while (fgets(buf, sizeof(buf), stdin))
-	{
-		buf[MAX_LINE-1] = '\0';
-		len = strlen(buf) + 1;
-		send(s, buf, len, 0);
 	}
 	else
 	{

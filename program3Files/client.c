@@ -1,6 +1,6 @@
 // Marc Stocker
 // Kevin Okele
-// This is the master branch
+// This is the Marc Branch
 
 /* This code is an updated version of the sample code from "Computer Networks: A Systems
  * Approach," 5th Edition by Larry L. Peterson and Bruce S. Davis. Some code comes from
@@ -23,7 +23,6 @@ int main(int argc, char *argv[])
 	char *host;
 	char *host_port;
 	char *filename;
-	char buf[MAX_LINE];
 	int s;
 	int len;
 
@@ -32,6 +31,8 @@ int main(int argc, char *argv[])
 		host = argv[1];
 		host_port= argv[2];
 		filename = argv[3];
+		filename[strlen(filename)]='\n';
+		len = strlen(filename);
 	}
 	else
 	{
@@ -76,13 +77,10 @@ int main(int argc, char *argv[])
 	}
 	freeaddrinfo(result);
 
-	/* Main loop: get and send lines of text */
-	while (fgets(buf, sizeof(buf), stdin))
-	{
-		buf[MAX_LINE-1] = '\0';
-		len = strlen(buf) + 1;
-		send(s, buf, len, 0);
-	}
+	// Send Filename to Server
+	printf("Filename to be sent: %s\nLen of file: %i\n", filename, len);
+	send(s, filename, len, 0);
+
 	// Close the send socket
 	close(s);
 

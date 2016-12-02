@@ -12,7 +12,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define SERVER_PORT "5433"
+#define SERVER_PORT "5432"
 #define MAX_LINE 256
 #define MAX_PENDING 5
 

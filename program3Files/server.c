@@ -1,5 +1,5 @@
 // Marc Stocker
-// Kevin Okele
+// Kevin Okeke
 //=================================================
 // This is the Master Branch
 //=================================================
@@ -86,18 +86,12 @@ main(int argc, char *argv[])
 		{
 			// Save filename from client
 			filename = buf;
-			printf("The file to be transfered: %s\n\n", filename);
 			// Open the file
 			fp = fopen(filename, "r");
-			// ERROR opening file
-			if (fp == NULL)
+			if (fp == NULL) // ERROR opening file
 			{
 				fprintf(stderr, "Can't open input file '%s'!\n", filename);
 				//send error to client - tell them we cannot open/find file
-				 char *errorr;
-				 errorr = "SERVER ERROR";
-				send(new_s, errorr, strlen(errorr)+1, 0);
-
 				//Close connections and exit program
 				close(new_s);
 				freeaddrinfo(result);
@@ -105,24 +99,21 @@ main(int argc, char *argv[])
 				exit(1);
 			}
 
-			printf("========= Printing/Sending file contents =========\n\n");
-			// Opened file successfully, send contents of file
+			// Opened file successfully, sending contents of file
 			int x;
 			while((x = fgetc(fp)) != EOF)
-			{
-				// printf("%c", x);
 				send(new_s, &x, 1, 0);
-			}
+			// close file reading stream
+			fclose(fp);
 
-			printf("\n\n\n--------- Finished Sending --------------\n\n");
+			// Finished sending File
+			// Exit while loop - We have read
 			repeat = 0;
 		}
 
 
 		// close connection with client
 		close(new_s);
-		// close file for reading
-		fclose(fp);
 	}
 
 	freeaddrinfo(result);

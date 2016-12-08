@@ -1,5 +1,5 @@
 // Marc Stocker
-// Kevin Okele
+// Kevin Okeke
 //=================================================
 // This is the Master Branch
 //=================================================
@@ -22,7 +22,6 @@ int main(int argc, char *argv[])
 	char *host;
 	char *host_port;
 	char *filename;
-	char buf[MAX_LINE];
 	int s, n;
 	int len;
 	FILE *of;
@@ -36,11 +35,9 @@ int main(int argc, char *argv[])
 	}
 	else
 	{
-		fprintf(stderr, "usage: %s host\n", argv[0]);
+		fprintf(stderr, "usage: %s host port# fileToTransfer\n", argv[0]);
 		exit(1);
 	}
-
-	printf("\nConnecting to server with following information...\nHost: %s\nHost Port: %s\nFilename: %s\n\n\n", host, host_port, filename);
 
 	/* Translate host name into peer's IP address */
 	memset(&hints, 0, sizeof(hints));
@@ -49,7 +46,7 @@ int main(int argc, char *argv[])
 	hints.ai_flags = 0;
 	hints.ai_protocol = 0;
 
-	if ((s = getaddrinfo(host, SERVER_PORT, &hints, &result)) != 0 )
+	if ((s = getaddrinfo(host, host_port, &hints, &result)) != 0 )
 	{
 		fprintf(stderr, "%s: getaddrinfo: %s\n", argv[0], gai_strerror(s));
 		exit(1);
@@ -72,50 +69,40 @@ int main(int argc, char *argv[])
 	}
 	if (rp == NULL)
 	{
-		perror("stream-talk-client: connect");
+		fprintf(stderr, "Client Error: Unable to connect to host '%s'\n", host);
 		exit(1);
 	}
 	freeaddrinfo(result);
 
-	printf("Filename to be sent: %s\nLen of file: %i\n", filename, len);
-	// Send Filename to Server
+	// Send Filename to download to Server
 	n = send(s, filename, len, 0);
-	if(n < 0)
-		perror("ERROR writing to socket");
+	if(n < 0) // if sending fails
+		fprintf(stderr, "CLIENT ERROR writing to socket");
 
 
-	// Receive the file
+	// Receive the file from the server
 	//-------------------------------------------------------------
-
-	printf("\n\n\n========= RECEIVING FILE FROM SERVER =============\n\n");
 	// Open file for writing
 	of = fopen(filename, "w");
 	if (of == NULL){
-		fprintf(stderr, "Can't open file for writing\n");
+		fprintf(stderr, "CLIENT ERROR Can't open file for copying\n"); // Print to stderr
 		close(s);
 		exit(1);
 	}
-	// Continue reading file while more information exists
-	// n = recv(s, buf, len, 0);
-	// if (n < 0){
-	// 	perror("ERROR reading from server");
-	// 	printf("SERVER ERROR reading from server\n");
-	// }
-	// printf("printing buf: %s\n", buf);
+
+	// While file has not trasnferred fully, continue reading/transferring
 	int x;
 	while( recv(s, &x, 1, 0) > 0)
 	{
-		// printf("printing buf: %s.", buf);
+		// Save contents of recv to file in 'of'
 		fprintf(of, "%c", x);
 	}
-
-
-
+	// Finished transferring file
+	// Close file writing stream
+	fclose(of);
 
 	// Close the send socket
 	close(s);
-	// Close the file for writing
-	fclose(of);
 
 	return 0;
 }

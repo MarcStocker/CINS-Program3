@@ -1,11 +1,15 @@
 # Marc Stocker
 # Kevin Okeke
-CC = g++
+CC = gcc
 CFLAGS = -Wall
 
-t-counter.exe: t-counter
-	$(CC) $(CFLAGS) -o t-counter t-counter.cpp
+all: client.exe server.exe
+
+client.exe: client
+	$(CC) $(CFLAGS) -o client client.c
+
+server.exe: server
+	$(CC) $(CFLAGS) -o server server.c
+
 clean:
-	rm -f t-counter
-run: t-counter
-	./t-counter
+	rm -f server client
